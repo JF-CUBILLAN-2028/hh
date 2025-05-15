@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <link rel="stylesheet" href="cs4.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queue Management System</title>
+</head>
+<body>
+    <h2>Queue Management System</h2>
+    <h3>Join the Queue</h3>
+
+    <label for="name">NAME</label>
+    <input type="text" id="name" placeholder="Enter your name" required>   
+
+    <label for="purpose">PURPOSE</label>
+    <input type="text" id="purpose" placeholder="Enter your purpose" required>
+    
+    <label for="id">ID NUMBER</label>
+    <input type="text" id="id" placeholder="Enter your ID number" required>
+    
+    <button type="button" onclick="addToQueue()">Join Queue</button>
+
+
+    
+
+    <h3>Current Queue</h3>
+    <hr>
+    <div id="queueList"></div>
+
+    <h3>Admin Panel</h3>
+    <hr>
+    <div id="adminPanel"></div>
+
+    <script>
+    let queue = [];
+
+    function addToQueue() {
+        let name = document.getElementById("name").value;
+        let purpose = document.getElementById("purpose").value;
+        let id = document.getElementById("id").value;
+
+    
+        if (!name || !purpose || !id) {
+            alert("Please fill out all fields.");
+            return;
+        }
+
+        if (/\d/.test(name)) {
+            alert("Name cannot contain numbers.");
+            return;
+        }
+
+        
+        let person = { name, purpose, id };
+
+       
+        queue.push(person);
+
+     
+        document.getElementById("name").value = "";
+        document.getElementById("purpose").value = "";
+        document.getElementById("id").value = "";
+
+       
+        displayQueue();
+    }
+
+    function displayQueue() {
+        let list = "";
+        let adminPanel = "";
+
+ 
+        queue.forEach((person, index) => {
+            list += `${index + 1}. ${person.name} - ${person.purpose} - ${person.id}<br>`;
+            adminPanel += `
+                ${index + 1}. ${person.name} - ${person.purpose} - ${person.id}
+                <button onclick="serveCustomer(${index})">Serve</button>
+                <button onclick="removeCustomer(${index})">Remove</button>
+                <br>
+            `;
+        });
+
+        document.getElementById("queueList").innerHTML = list;
+        document.getElementById("adminPanel").innerHTML = adminPanel;
+    }
+
+    function serveCustomer(index) {
+        queue.splice(index, 1);
+        displayQueue(); 
+    }
+
+    function removeCustomer(index) {
+        queue.splice(index, 1); 
+        displayQueue();
+    }
+    </script>
+</body>
+</html>
