@@ -71,17 +71,14 @@
         let adminPanel = "";
 
  
-        let index = 0;
-        for (const [i, person] of queue.entries()) {
-            list += `${i + 1}. ${person.name} - ${person.purpose} - ${person.id}<br>`;
+        queue.forEach((person, index) => {
+            list += `${index + 1}. ${person.name} - ${person.purpose} - ${person.id}<br>`;
             adminPanel += `
-             ${i + 1}. ${person.name} - ${person.purpose} - ${person.id}
-            <button onclick="serveCustomer(${i})">Serve</button>
-            <button onclick="removeCustomer(${i})">Remove</button>
-            <br>
-        `;
-    }
-
+                ${index + 1}. ${person.name} - ${person.purpose} - ${person.id}
+                <button onclick="serveCustomer(${index})">Serve</button>
+                <button onclick="removeCustomer(${index})">Remove</button>
+                <br>
+            `;
         });
 
         document.getElementById("queueList").innerHTML = list;
